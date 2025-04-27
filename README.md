@@ -44,9 +44,9 @@ npx playwright test
 Donde `<NÚMERO_RUN>` es el número de ejecución del workflow (lo puedes ver en la lista de acciones de GitHub Actions).
 
 ### Ejemplo de acceso
-Supón que la ejecución número **3** ya se realizó:
-- [Playwright #3](https://juanpablogn.github.io/Playwright-automation/playwright/3/)
-- [Allure #3](https://juanpablogn.github.io/Playwright-automation/allure/3/)
+Si el número de ejecución es 15:
+- Playwright: https://juanpablogn.github.io/Playwright-automation/playwright/15/
+- Allure: https://juanpablogn.github.io/Playwright-automation/allure/15/
 
 **Nota:** El historial no se sobrescribe. Cada ejecución deja su propio reporte accesible públicamente.
 

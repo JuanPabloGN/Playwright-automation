@@ -29,7 +29,7 @@ jobs:
     # Solo publica en GitHub Pages si es push a main
     - name: Generate Playwright HTML report
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: npx playwright show-report --output=playwright-report
+      run: npx playwright show-report
     - name: Deploy Playwright report to GitHub Pages
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v4
