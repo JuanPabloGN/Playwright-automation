@@ -1,24 +1,6 @@
-name: Playwright Tests
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-jobs:
-  test:
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test
+
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
@@ -26,10 +8,7 @@ jobs:
         path: playwright-report/
         retention-days: 30
 
-    # Solo publica en GitHub Pages si es push a main
-    - name: Generate Playwright HTML report
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: npx playwright show-report
+    # Publicar el reporte Playwright en GitHub Pages (¡ya no necesitas show-report!)
     - name: Deploy Playwright report to GitHub Pages
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v4
@@ -39,7 +18,7 @@ jobs:
         publish_branch: gh-pages
         destination_dir: playwright/${{ github.run_number }}
         force_orphan: false
-        
+
     - name: Generate Allure report
       run: npx allure generate --clean
 
@@ -52,5 +31,3 @@ jobs:
         publish_branch: gh-pages
         destination_dir: allure/${{ github.run_number }}
         force_orphan: false
-
-        
