@@ -32,10 +32,6 @@ npx playwright test
 
 ## Visualización de reportes Allure
 
-## Historial de reportes en GitHub Pages
-
-Cada vez que se ejecuta el workflow de GitHub Actions (por ejemplo, tras un push a `main`), los reportes de Playwright y Allure se publican en subcarpetas separadas y únicas según el número de ejecución.
-
 ### Ver el historial de reportes
 - **Reporte Playwright:**
   ```
@@ -48,9 +44,9 @@ Cada vez que se ejecuta el workflow de GitHub Actions (por ejemplo, tras un push
 Donde `<NÚMERO_RUN>` es el número de ejecución del workflow (lo puedes ver en la lista de acciones de GitHub Actions).
 
 ### Ejemplo de acceso
-Si el número de ejecución es 15:
-- Playwright: https://juanpablogn.github.io/Playwright-automation/playwright/15/
-- Allure: https://juanpablogn.github.io/Playwright-automation/allure/15/
+Supón que la ejecución número **3** ya se realizó:
+- [Playwright #3](https://juanpablogn.github.io/Playwright-automation/playwright/3/)
+- [Allure #3](https://juanpablogn.github.io/Playwright-automation/allure/3/)
 
 **Nota:** El historial no se sobrescribe. Cada ejecución deja su propio reporte accesible públicamente.
 

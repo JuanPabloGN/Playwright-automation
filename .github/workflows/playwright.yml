@@ -25,3 +25,32 @@ jobs:
         name: playwright-report
         path: playwright-report/
         retention-days: 30
+
+    # Solo publica en GitHub Pages si es push a main
+    - name: Generate Playwright HTML report
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: npx playwright show-report --output=playwright-report
+    - name: Deploy Playwright report to GitHub Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./playwright-report
+        publish_branch: gh-pages
+        destination_dir: playwright/${{ github.run_number }}
+        force_orphan: false
+        
+    - name: Generate Allure report
+      run: npx allure generate --clean
+
+    - name: Deploy Allure report to GitHub Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./allure-report
+        publish_branch: gh-pages
+        destination_dir: allure/${{ github.run_number }}
+        force_orphan: false
+
+        
