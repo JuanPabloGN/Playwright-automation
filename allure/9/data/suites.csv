@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","1201","flujo de compra","chromium","Mon Apr 28 21:55:09 UTC 2025","passed","Mon Apr 28 21:55:11 UTC 2025","","Primera Compra.spec.ts","",""
+"","1229","tiene título","firefox","Mon Apr 28 21:55:11 UTC 2025","passed","Mon Apr 28 21:55:13 UTC 2025","","Primera Compra.spec.ts","",""
+"","3342","flujo de compra","webkit","Mon Apr 28 21:55:19 UTC 2025","passed","Mon Apr 28 21:55:22 UTC 2025","","Primera Compra.spec.ts","",""
+"","288","tiene título","chromium","Mon Apr 28 21:55:09 UTC 2025","passed","Mon Apr 28 21:55:09 UTC 2025","","Primera Compra.spec.ts","",""
+"","1218","flujo de compra","firefox","Mon Apr 28 21:55:13 UTC 2025","passed","Mon Apr 28 21:55:15 UTC 2025","","Primera Compra.spec.ts","",""
+"","2555","tiene título","webkit","Mon Apr 28 21:55:16 UTC 2025","passed","Mon Apr 28 21:55:18 UTC 2025","","Primera Compra.spec.ts","",""
