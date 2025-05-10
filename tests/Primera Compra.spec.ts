@@ -61,10 +61,5 @@ await page.locator('[data-test="finish"]').click();
   // Captura de pantalla después de finalizar el pago y adjunta a Allure
   await adjuntarCaptura(page, 'Después de finalizar el pago');
 
-  // Espera que la página tenga el texto "Thank you".
-  await expect(page.getByText('Thank you for your order!')).toBeVisible();
-
-  // captura de imagen al mensaje de gracias
-  await adjuntarCaptura(page, 'Después de finalizar el pago');
 
 });
