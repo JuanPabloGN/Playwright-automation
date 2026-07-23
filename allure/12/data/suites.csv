@@ -1,0 +1,7 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","331","tiene título","chromium","2026-07-23","passed","2026-07-23","","Primera Compra.spec.ts","",""
+"","1195","flujo de compra","firefox","2026-07-23","passed","2026-07-23","","Primera Compra.spec.ts","",""
+"","888","tiene título","webkit","2026-07-23","passed","2026-07-23","","Primera Compra.spec.ts","",""
+"","2854","flujo de compra","webkit","2026-07-23","passed","2026-07-23","","Primera Compra.spec.ts","",""
+"","1094","flujo de compra","chromium","2026-07-23","passed","2026-07-23","","Primera Compra.spec.ts","",""
+"","2536","tiene título","firefox","2026-07-23","passed","2026-07-23","","Primera Compra.spec.ts","",""
