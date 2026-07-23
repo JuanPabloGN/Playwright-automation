@@ -1,65 +1,39 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 import { adjuntarCaptura } from './allure.helper';
 
-test('tiene título', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
+test('tiene título', async ({ loginPage }) => {
+  await loginPage.goto();
 
-  // Espera que el título contenga el texto.
-  await expect(page).toHaveTitle(/Swag Labs/);
+  await expect(loginPage.page).toHaveTitle(/Swag Labs/);
 });
 
-test('flujo de compra', async ({ page }) => {
-  await page.goto('https://www.saucedemo.com/');
+test('flujo de compra', async ({ page, loginPage, inventoryPage, cartPage, checkoutPage }) => {
+  await loginPage.goto();
+  await loginPage.login('standard_user', 'secret_sauce');
 
-  // Ingresa las credenciales y haz login.
-  await page.getByRole('textbox', { name: 'Username' }).fill('standard_user');
-  await page.getByRole('textbox', { name: 'Password' }).fill('secret_sauce');
-  await page.getByRole('button', { name: 'Login' }).click();
-
-  // Captura de pantalla después del login y adjunta a Allure
   await adjuntarCaptura(page, 'Después de login');
+  await expect(inventoryPage.productsTitle).toBeVisible();
 
-  // Espera que la página tenga el texto "Products".
-  await expect(page.getByText('Products')).toBeVisible();
+  await inventoryPage.addFirstProductToCart();
 
-  // Agrega el primer producto al carrito.
-  await page.getByRole('button', { name: 'Add to cart' }).first().click();
-
-  // Captura de pantalla después de agregar al carrito y adjunta a Allure
   await adjuntarCaptura(page, 'Después de agregar al carrito');
 
-  // Ir al carrito usando el data-test correcto.
-  await page.locator('[data-test="shopping-cart-link"]').click();
+  await inventoryPage.goToCart();
 
-  // Captura de pantalla después de entrar al carrito y adjunta a Allure
   await adjuntarCaptura(page, 'Después de entrar al carrito');
+  await expect(cartPage.cartTitle).toBeVisible();
 
-  // Espera que la página tenga el texto "Your Cart".
-  await expect(page.getByText('Your Cart')).toBeVisible();
+  await cartPage.checkout();
 
-  // Realiza el checkout.
-  await page.getByRole('button', { name: 'Checkout' }).click();
-
-  // Captura de pantalla después del checkout y adjunta a Allure
   await adjuntarCaptura(page, 'Después del checkout');
 
-  // Llena el formulario de checkout.
-await page.locator('[data-test="firstName"]').fill('John');
-await page.locator('[data-test="lastName"]').fill('Doe');
-await page.locator('[data-test="postalCode"]').fill('12345');
+  await checkoutPage.fillForm('John', 'Doe', '12345');
 
-// Captura de pantalla después de completar el checkout y adjunta a Allure
-await adjuntarCaptura(page, 'Después de completar el checkout');
+  await adjuntarCaptura(page, 'Después de completar el checkout');
 
-// Haz clic en "Continue" para avanzar al resumen
-await page.locator('[data-test="continue"]').click();
+  await checkoutPage.continue();
+  await checkoutPage.finish();
 
-// Ahora haz clic en "Finish"
-await page.locator('[data-test="finish"]').click();
-  
-
-  // Captura de pantalla después de finalizar el pago y adjunta a Allure
   await adjuntarCaptura(page, 'Después de finalizar el pago');
-
-
+  await expect(checkoutPage.confirmationMessage).toBeVisible();
 });
