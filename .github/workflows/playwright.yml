@@ -9,6 +9,10 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chromium, firefox, webkit]
+      
     steps:
       # Descarga el código fuente del repositorio
       - uses: actions/checkout@v4
