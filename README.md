@@ -9,7 +9,7 @@ Automatización de pruebas end-to-end para [Saucedemo](https://www.saucedemo.com
 - Pruebas en múltiples navegadores (Chromium, Firefox, Webkit)
 
 ## Estructura principal
-- `tests/Primera Compra.spec.ts`: Prueba principal (título y flujo de compra)
+- `tests/checkout.spec.ts`: Prueba principal (título y flujo de compra)
 - `tests/allure.helper.ts`: Helper para adjuntar capturas a Allure
 - `playwright.config.ts`: Configuración de Playwright y Allure
 
@@ -57,11 +57,11 @@ Donde `<NÚMERO_RUN>` es el número de ejecución del workflow (lo puedes ver en
    Esto abrirá el reporte en tu navegador.
 
 ## Personalización
-- Modifica `tests/Primera Compra.spec.ts` para agregar o ajustar escenarios.
+- Modifica `tests/checkout.spec.ts` para agregar o ajustar escenarios.
 - Puedes agregar más capturas usando el helper `adjuntarCaptura`.
 
 ## Notas
-- Solo se ejecutan los tests de `Primera Compra.spec.ts` por configuración.
+- Se ejecutan todos los archivos `*.spec.ts` dentro de `tests/`.
 - Carpeta `allure-results/` y capturas están ignoradas en `.gitignore`.
 
 ---
