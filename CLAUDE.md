@@ -21,6 +21,7 @@ Objetivo doble: (1) que el repo pese en el CV para roles de QA Automation / DevO
 - Reportes: Allure (`allure-playwright` + `allure-commandline` como devDependency, usar `npx allure`).
 - CI: GitHub Actions. Deploy de reportes a `gh-pages` con `peaceiris/actions-gh-pages`.
 - Navegadores: chromium, firefox, webkit (proyectos en `playwright.config.ts`).
+- Node 22 (local y CI). Playwright 1.52 se cuelga instalando navegadores con Node 26: en local usar `mise exec node@22 -- npx playwright ...` hasta fijar la versión en el repo.
 
 ## Estructura
 
@@ -61,11 +62,11 @@ npx allure serve ./allure-results
 
 ## Estado actual y pendientes
 
-Estado (nov 2026): dos tests (`tiene título`, `flujo de compra`), POM + fixtures ya implementados, workflow con matriz de 3 navegadores pero con errores.
+Estado (nov 2026): limpieza del repo terminada (PR #1). Dos tests en `tests/checkout.spec.ts` (`tiene título`, `flujo de compra`), POM + fixtures implementados. CI en rojo: `ubuntu-latest` ya es Ubuntu 26.04 y Playwright 1.52 no lo soporta (se arregla en el ítem del workflow).
 
 Orden sugerido. Cada ítem = una rama o PR pequeño:
 
-- [ ] **Limpieza del repo**: descripción y topics en GitHub, sacar `allure-results/` y `screenshots/` del tracking, borrar `pnpm-lock.yaml`, renombrar `Primera Compra.spec.ts` → `checkout.spec.ts`.
+- [x] **Limpieza del repo**: descripción y topics en GitHub, sacar `allure-results/` y `screenshots/` del tracking, borrar `pnpm-lock.yaml`, renombrar `Primera Compra.spec.ts` → `checkout.spec.ts`.
 - [ ] **Arreglar el workflow** (ver sección CI). Es el ítem de más valor para el perfil DevOps.
 - [ ] **test.step + screenshot: 'on'** en vez de `adjuntarCaptura`.
 - [ ] **Aserciones de negocio** en el flujo de compra: badge del carrito = 1, producto correcto en el carrito, total correcto en el checkout.
@@ -85,11 +86,12 @@ Problemas del workflow actual:
 3. Los 3 jobs publican en paralelo a la misma carpeta de `gh-pages`: carrera.
 4. Allure y los deploys no corren cuando un test falla, que es cuando más se necesita el reporte.
 5. Menores: `npm install -g --save-dev` contradictorio, sin `cache: npm`, `lts/*` sin fijar, timeout de 60 min, sin `permissions`.
+6. `runs-on: ubuntu-latest` ahora es Ubuntu 26.04 y Playwright 1.52 no puede instalar navegadores ahí: el job falla en ~15 s sin correr tests (también en `main`).
 
 Diseño objetivo:
 - Job `test` con matriz `[chromium, firefox, webkit]`, `fail-fast: false`, `--project=${{ matrix.browser }}`, instala solo ese navegador, sube `allure-results-${{ matrix.browser }}`.
 - Job `report` con `needs: test` e `if: ${{ !cancelled() }}`, descarga con `pattern: allure-results-*` y `merge-multiple: true`, genera Allure y publica una sola vez a `gh-pages` solo en push a `main`.
-- `concurrency` por rama, `permissions: contents: write` solo en `report`, Node fijado (22), `cache: npm`, timeout 15 min.
+- `runs-on: ubuntu-24.04` fijado, `concurrency` por rama, `permissions: contents: write` solo en `report`, Node fijado (22), `cache: npm`, timeout 15 min.
 - Verificar antes de aplicar que los nombres de proyecto en `playwright.config.ts` coincidan con la matriz.
 
 ## Qué debe poder contar Juan en una entrevista (checklist de aprendizaje)
