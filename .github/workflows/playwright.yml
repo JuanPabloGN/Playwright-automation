@@ -10,6 +10,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-24.04
     strategy:
+      fail-fast: false
       matrix:
         browser: [chromium, firefox, webkit]
 
@@ -26,19 +27,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Instala los navegadores necesarios para Playwright (Chromium, Firefox, WebKit)
+      # Install only the browser this matrix job runs, plus its OS dependencies
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps ${{ matrix.browser }}
 
       # Ejecuta las pruebas automatizadas de Playwright
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --project=${{ matrix.browser }}
 
       # Sube el reporte HTML de Playwright como artefacto descargable en GitHub Actions
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: playwright-report
+          name: playwright-report-${{matrix.browser }}
           path: playwright-report/
           retention-days: 30
 
