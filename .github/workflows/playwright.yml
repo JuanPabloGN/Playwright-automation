@@ -12,15 +12,15 @@ jobs:
     strategy:
       matrix:
         browser: [chromium, firefox, webkit]
-      
+
     steps:
       # Descarga el código fuente del repositorio
       - uses: actions/checkout@v4
 
-      # Configura Node.js en la versión LTS más reciente
+      # Set up the Node version pinned in .tool-versions (same file mise reads locally)
       - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version-file: .tool-versions
 
       # Instala todas las dependencias del proyecto (npm install)
       - name: Install dependencies
@@ -52,7 +52,7 @@ jobs:
           publish_branch: gh-pages
           destination_dir: playwright/${{ github.run_number }}
           force_orphan: false
-      # Instala el CLI de Allure       
+      # Instala el CLI de Allure
       - name: Install Allure CLI
         run: npm install -g allure-commandline --save-dev
       # Genera el reporte de allure
